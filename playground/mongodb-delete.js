@@ -20,4 +20,6 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', { useNewUrlParser: true
     db.collection('Todos').findOneAndDelete({ completed: false }).then((res) => {
         console.log(res)
     })
+
+    client.close()
 })
