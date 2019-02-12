@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const { ObjectID } = require('mongodb')
 
 const { mongoose } = require('./db/mongoose')
+mongoose.set('useFindAndModify', false);
 const { Todo } = require('./models/todo')
 const { User } = require('./models/user')
 
@@ -82,7 +83,7 @@ app.patch('/todos/:id', (req, res) => {
         body.completedAt = null
     }
 
-    Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo) => {
+    Todo.findOneAndUpdate(id, {$set: body}, {new: true}).then((todo) => {
         if (!todo) {
             return res.status(404).send()
         }
