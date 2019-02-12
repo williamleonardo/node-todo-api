@@ -102,9 +102,9 @@ describe('GET /todos/:id', () => {
 })
 
 describe('DELETE /todos/:id', () => {
-    it('should return todo doc', (done) => {
+    it('should remove a todo', (done) => {
         request(app)
-            .get(`/todos/${todos[0]._id.toHexString()}`)
+            .delete(`/todos/${todos[0]._id.toHexString()}`)
             .expect(200)
             .expect((res) => {
                 expect(res.body.todo.text).toBe(todos[0].text)
@@ -116,14 +116,14 @@ describe('DELETE /todos/:id', () => {
         var hexId = new ObjectID().toHexString()
 
         request(app)
-            .get(`/todos/${hexId}`)
+            .delete(`/todos/${hexId}`)
             .expect(404)
             .end(done)
     });
     
     it('should return 404 for non-object ids', (done) => {
         request(app)
-            .get('/todos/123')
+            .delete('/todos/123')
             .expect(404)
             .end(done)
     });
